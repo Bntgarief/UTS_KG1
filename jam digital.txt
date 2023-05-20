@@ -1,0 +1,87 @@
+function setup() {
+  createCanvas(600, 600);
+  textAlign(CENTER, CENTER);
+  strokeCap(SQUARE);
+}
+
+function draw() {
+  background('white');
+  translate(width/2.0, height/2.0);
+  
+  var date= new Date(),
+      jam = date.getHours(),
+      menit = date.getMinutes(),
+      detik = date.getSeconds(),
+      ms = date.getMilliseconds(),
+    i, v, w;
+  
+  // Gambar lingkaran jam    
+  fill('white');
+  stroke('green');
+  strokeWeight(8);
+  ellipse(0,0,500,500);
+  
+  //Angka
+  textSize(30);
+  textStyle();
+  fill('black');
+  noStroke()
+  
+  for(i=0; i<12; i++){
+    v=p5.Vector.fromAngle((i+1) / 12.0*TAU - HALF_PI);
+    v.mult(100);
+    text(i+1 , v.x , v.y);
+    
+    if(i%3 == 2){
+      text(i+1, v.x , v.y);
+      textStyle(BOLD);
+    }
+  }
+  
+  // Titik-titik menit/detik
+  fill('black');
+  strokeWeight(3);
+  
+  for(i=0; i<60; i++){
+    v= p5.Vector.fromAngle((i+1) / 60.0* TAU - HALF_PI);
+    v.mult(100);
+    if(i%5 == 4){
+      ellipse(v.x, v.y, 5,5);
+    }else{
+      ellipse(v.x, v.y, 2,2);
+    }
+  }
+  
+  // Titik tengah
+  fill('black');
+  stroke(0);
+  noStroke();
+  ellipse(0,0,20,20);
+  
+  // Jam
+  stroke('black');
+  strokeWeight(6);
+  w=(jam + menit/60 + detik/3600) *TAU/12 - HALF_PI;
+  v=p5.Vector.fromAngle(w);
+  v.mult(100);
+  line(0,0, v.x, v.y);
+  
+  //menit
+  stroke("black");
+  strokeWeight(6);
+  w=(menit + detik/60 + ms/1000/60) *TAU/60 - HALF_PI;
+  v=p5.Vector.fromAngle(w);
+  v.mult(100);
+  line(0,0, v.x, v.y);
+  
+  //detik
+  stroke("black");
+  strokeWeight(6);
+  w=detik *TAU/60 - HALF_PI;
+  v=p5.Vector.fromAngle(w);
+  v.mult(100);
+  line(0,0, v.x, v.y);
+  
+  resetMatrix();
+  
+}
